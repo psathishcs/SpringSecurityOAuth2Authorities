@@ -7,6 +7,14 @@ node {
         checkout scm
     }
 
+    stage('Gradle Build') {
+        if (isUnix()) {
+            sh './gradlew clean build'
+        } else {
+            bat 'gradlew.bat clean build'
+        }
+    }
+
     stage('Build image') {
         /* This builds the actual image; synonymous to
          * docker build on the command line */
