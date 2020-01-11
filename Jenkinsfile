@@ -18,8 +18,10 @@ node {
     stage('Build image') {
         /* This builds the actual image; synonymous to
          * docker build on the command line */
-
         app = docker.build("psathishcs/spring-security-oauth")
+        app.inside {
+            sh 'make test'
+        }
     }
 
     stage('Push image') {
@@ -27,5 +29,5 @@ node {
             app.push("${env.BUILD_NUMBER}")
             app.push("latest")
         }
-    } 
+    }
 }
